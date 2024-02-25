@@ -3,21 +3,20 @@ const { otpStore } = require("./verifyIdAndSendCode");
 const verifyOtpCode = async (req, res) => {
   const { code, identity_number } = req.body;
 
-  const storedData = otpStore[identity_number];
+  let storedData = otpStore[identity_number];
   if (!storedData) {
-    return res.status(404).send("Verification data not found or code expired.");
+    return res.status(404).send({ message: "Verification data not found." });
   }
 
   if (Date.now() > storedData.expiry) {
-    delete otpStore[identity_number];
-    return res.status(408).send("Code expired.");
+    return res.status(408).send({ message: "Code expired." });
   }
 
   if (code === storedData.code.toString()) {
-    res.status(200).send("Code verified successfully");
+    res.status(200).send({ message: "Code verified successfully" });
     delete otpStore[identity_number];
   } else {
-    res.status(400).send("Invalid code");
+    res.status(400).send({ message: "Invalid code" });
   }
 };
 
