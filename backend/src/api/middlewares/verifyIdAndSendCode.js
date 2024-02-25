@@ -19,7 +19,7 @@ const verifyIdAndSendCode = async (req, res) => {
     const verificationCode = Math.floor(100000 + Math.random() * 900000);
     const expiry = Date.now() + 180000;
     otpStore[identity_number] = { code: verificationCode, expiry };
-    console.log("OTP store:", otpStore);
+    // console.log("OTP store:", otpStore);
     console.log("Generated code:", verificationCode);
 
     const emailSent = await sendEmail(userEmail, verificationCode);
