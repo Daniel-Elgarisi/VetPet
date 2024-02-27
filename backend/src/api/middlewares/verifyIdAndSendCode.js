@@ -12,7 +12,7 @@ const verifyIdAndSendCode = async (req, res) => {
       [identity_number]
     );
     if (result.rows.length === 0) {
-      return res.status(404).send("ID not found");
+      return res.status(404).send("מספר תעודת הזהות לא נמצא.");
     }
     const userEmail = result.rows[0].email;
 
@@ -25,13 +25,13 @@ const verifyIdAndSendCode = async (req, res) => {
     const emailSent = await sendEmail(userEmail, verificationCode);
     if (emailSent) {
       console.log("Verification code sent via email.");
-      res.status(200).json({ message: "Verification code sent via email" });
+      res.status(200).json({ message: "קוד האימות נשלח לאימייל שלך." });
     } else {
-      throw new Error("Failed to send email.");
+      throw new Error("שליחת האימייל נכשלה.");
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    res.status(500).send("שגיאת שרת.");
   }
 };
 
