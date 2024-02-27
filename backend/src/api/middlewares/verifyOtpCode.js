@@ -13,7 +13,10 @@ const verifyOtpCode = async (req, res) => {
   }
 
   if (code === storedData.code.toString()) {
-    res.status(200).send({ message: "Code verified successfully" });
+    res.status(200).send({
+      message: "Code verified successfully",
+      ownerId: identity_number,
+    });
     delete otpStore[identity_number];
   } else {
     res.status(400).send({ message: "Invalid code" });
