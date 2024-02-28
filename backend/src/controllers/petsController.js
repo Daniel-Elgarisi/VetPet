@@ -19,7 +19,7 @@ const getPetsByOwnerId = async (req, res) => {
       return res.status(404).send("לא נמצאו חיות מחמד עבור בעלים זה.");
     } else {
       const petsData = pets.rows.map((pet) => ({
-        petId: pet.id,
+        id: pet.id,
         name: pet.name,
       }));
       console.log(petsData);

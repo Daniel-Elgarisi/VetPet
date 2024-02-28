@@ -220,10 +220,24 @@ const deleteAppointment = async (req, res) => {
   }
 };
 
+const getAppointmentTypes = async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM appointments_types");
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "No appointment types found." });
+    }
+    res.json(result.rows);
+  } catch (error) {
+    console.error("שגיאה בייבוא סוגי פגישות:", error);
+    res.status(500).json({ message: "שגיאה בייבוא סוגי פגישות" });
+  }
+};
+
 module.exports = {
   createAppointment,
   getAppointmentsForSinglePet,
   getAppointmentsByOwner,
   getNonAvailableAppointmentsForDay,
   deleteAppointment,
+  getAppointmentTypes,
 };
