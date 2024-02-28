@@ -10,7 +10,7 @@ const {
 
 router.post("/create-appointment", createAppointment);
 router.get("/get-appointments/:id", getAppointmentsForSinglePet);
-router.get("/get-appointmentsByOwner/:ownerId", getAppointmentsByOwner);
+router.get("/get-appointmentsByOwner/:id", getAppointmentsByOwner);
 router.get(
   "/get-NonAvailableAppointmentsForDay/:date",
   getNonAvailableAppointmentsForDay

@@ -128,7 +128,7 @@ const getNonAvailableAppointmentsForDay = async (req, res) => {
 };
 
 const getAppointmentsByOwner = async (req, res) => {
-  const ownerId = parseInt(req.params.ownerId, 10);
+  const ownerId = parseInt(req.params.id, 10);
 
   try {
     const petsResult = await pool.query(
@@ -155,10 +155,9 @@ const getAppointmentsByOwner = async (req, res) => {
 };
 
 function formatDateToISO(dateTimeStr) {
-  // Assuming dateTimeStr is in "YYYY-MM-DDTHH:MM:SS+ZZ:ZZ" format
   try {
     const date = new Date(dateTimeStr);
-    return date.toISOString(); // Converts to ISO format, but keep in mind this will be in UTC
+    return date.toISOString();
   } catch (error) {
     console.error("Error formatting date to ISO:", error);
     throw new Error("פורמט תאריך/שעה לא חוקי");
@@ -166,7 +165,6 @@ function formatDateToISO(dateTimeStr) {
 }
 
 const getDoctorWithFewestAppointments = async (dateTime) => {
-  // Convert dateTime to PostgreSQL's DATE and TIME formats
   const date = dateTime.split(" ")[0];
   const time = dateTime.split(" ")[1];
 
