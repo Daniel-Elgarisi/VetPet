@@ -6,6 +6,7 @@ const {
   getAppointmentsByOwner,
   getNonAvailableAppointmentsForDay,
   deleteAppointment,
+  getAppointmentTypes,
 } = require("../../controllers/appointmentsController");
 
 router.post("/create-appointment", createAppointment);
@@ -16,4 +17,5 @@ router.get(
   getNonAvailableAppointmentsForDay
 );
 router.delete("/delete-appointment", deleteAppointment);
+router.get("/get-AppointmentTypes", getAppointmentTypes);
 module.exports = router;
