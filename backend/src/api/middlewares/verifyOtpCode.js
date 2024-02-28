@@ -1,3 +1,4 @@
+const pool = require("../../config/db");
 const { otpStore } = require("./verifyIdAndSendCode");
 
 const verifyOtpCode = async (req, res) => {
@@ -15,10 +16,23 @@ const verifyOtpCode = async (req, res) => {
   }
 
   if (code === storedData.code.toString()) {
-    res.status(200).send({
-      message: "הקוד אומת בהצלחה, מתחבר...",
-      ownerId: identity_number,
-    });
+    try {
+      const query = "SELECT id FROM owners_profile WHERE identity_number = $1";
+      const { rows } = await pool.query(query, [identity_number]);
+      if (rows.length > 0) {
+        const ownerId = rows[0].id;
+        console.log(ownerId);
+        res.status(200).send({
+          message: "הקוד אומת בהצלחה, מתחבר...",
+          ownerId: ownerId,
+        });
+      } else {
+        res.status(404).send({ message: "לא נמצא משתמש עם מספר זהות זה." });
+      }
+    } catch (error) {
+      console.error("Database query error", error);
+      res.status(500).send({ message: "שגיאה בשרת בעת ניסיון לאימות הקוד." });
+    }
     delete otpStore[identity_number];
   } else {
     res.status(400).send({ message: "קוד אימות לא חוקי." });

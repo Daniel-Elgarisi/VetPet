@@ -5,16 +5,16 @@ const sendEmail = async (toEmail, verificationCode) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER, // App Engine email user
-      pass: process.env.EMAIL_PASSWORD, // App Engine email pass
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
     },
   });
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: toEmail,
-    subject: "Verification Code",
-    text: `Your verification code is: ${verificationCode}`,
+    subject: "קוד אימות",
+    text: `קוד האימות שלך הינו: ${verificationCode}`,
   };
 
   try {
