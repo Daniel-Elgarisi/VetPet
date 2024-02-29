@@ -11,7 +11,8 @@ const getOwners = async (req, res) => {
 };
 
 const editOwnersProfile = async (req, res) => {
-  const { identity_number } = req.params;
+  const ownerId = parseInt(req.params.id, 10);
+
   const updates = req.body;
 
   let updateFields = [];
@@ -25,17 +26,16 @@ const editOwnersProfile = async (req, res) => {
       index++;
     }
   }
-  console.log(updateFields, updateValues, identity_number);
 
   if (updateFields.length === 0) {
     return res.status(400).send("לא בוצעו שינויים");
   }
-  updateValues.push(identity_number);
+  updateValues.push(ownerId);
 
   const updateQuery = `
     UPDATE owners_profile
     SET ${updateFields.join(", ")}
-    WHERE identity_number = $${index}
+    WHERE id = $${index}
     RETURNING *;
   `;
 
@@ -55,12 +55,13 @@ const editOwnersProfile = async (req, res) => {
 };
 
 const getOwnerDetails = async (req, res) => {
-  const { identity_number } = req.params;
+  const ownerId = req.params.id;
+  console.log(ownerId);
 
   try {
     const ownerDetails = await pool.query(
-      "SELECT phone_number, city, street, apartment_number, email FROM owners_profile WHERE identity_number = $1",
-      [identity_number]
+      "SELECT phone_number, city, street, apartment_number, email FROM owners_profile WHERE id = $1",
+      [ownerId]
     );
     if (ownerDetails.rowCount === 0) {
       return res.status(404).send("לא נמצא בעל חיית מחמד");
