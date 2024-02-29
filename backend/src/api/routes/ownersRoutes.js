@@ -7,7 +7,7 @@ const {
 } = require("../../controllers/ownersController");
 
 router.get("/get-owners", getOwners);
-router.post("/edit-ownersProfile/:identity_number", editOwnersProfile);
-router.get("/get-ownerInformation/:identity_number", getOwnerDetails);
+router.post("/edit-ownersProfile/:id", editOwnersProfile);
+router.get("/get-ownerInformation/:id", getOwnerDetails);
 
 module.exports = router;
