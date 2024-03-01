@@ -10,6 +10,7 @@ const {
   getFutureAppointmentsForOwner,
   getPreviousAppointmentsForPet,
   getFutureAppointmentsForPet,
+  updateAppointment,
 } = require("../../controllers/appointmentsController");
 
 router.post("/create-appointment", createAppointment);
@@ -30,5 +31,6 @@ router.get(
 );
 router.get("/get-previousAppointments/:pet_id", getPreviousAppointmentsForPet);
 router.get("/get-futureAppointments/:pet_id", getFutureAppointmentsForPet);
+router.post("/update-appointment/:pet_id", updateAppointment);
 
 module.exports = router;

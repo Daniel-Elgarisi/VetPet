@@ -11,7 +11,6 @@ const createAppointment = async (req, res) => {
     });
   }
 
-  // const dateTime = formatAppointmentDateTime(date, time);
   const dateTimeForDb = `${date} ${time}`;
 
   try {
@@ -324,6 +323,86 @@ const getFutureAppointmentsForOwner = async (req, res) => {
   }
 };
 
+const updateAppointment = async (req, res) => {
+  const petId = parseInt(req.params.pet_id, 10);
+  const { date, time, appointmentType } = req.body;
+
+  console.log(
+    `Received for update: petId=${petId}, date=${date}, time=${time}, appointmentType=${appointmentType}`
+  );
+
+  if (!date && !time && !appointmentType) {
+    return res
+      .status(400)
+      .json({ message: "חסר מידע נדרש. אנא ספק תאריך, שעה או סוג פגישה." });
+  }
+  if (isNaN(petId)) {
+    return res
+      .status(400)
+      .json({ message: "המזהה של חיית המחמד חייב להיות מספר." });
+  }
+
+  try {
+    const result = await pool.query(
+      "SELECT date, appointment_type FROM appointments WHERE pet_id = $1",
+      [petId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "לא נמצא תור קיים." });
+    }
+    const currentAppointment = result.rows[0];
+    console.log(`Current appointment:`, currentAppointment);
+
+    // Trim the appointment types for comparison
+    const currentTypeTrimmed = currentAppointment.appointment_type.trim();
+    const inputTypeTrimmed = appointmentType.trim();
+
+    // Check if there are changes to update
+    const isTypeChanged = currentTypeTrimmed !== inputTypeTrimmed;
+    const inputDateTime =
+      date && time
+        ? moment
+            .tz(`${date} ${time}`, "DD-MM-YYYY HH:mm", "Asia/Jerusalem")
+            .toISOString()
+        : null;
+    const isDateChanged =
+      inputDateTime && inputDateTime !== currentAppointment.date.toISOString();
+    console.log(
+      `isDateChanged: ${isDateChanged}, isTypeChanged: ${isTypeChanged}`
+    );
+
+    if (!isDateChanged && !isTypeChanged) {
+      return res.status(200).json({ message: "אין שינויים לעדכון." });
+    }
+
+    // Construct the update query
+    const updates = [];
+    const values = [];
+    if (isDateChanged) {
+      updates.push(`date = $${updates.length + 1}`);
+      values.push(inputDateTime);
+    }
+    if (isTypeChanged) {
+      updates.push(`appointment_type = $${updates.length + 1}`);
+      values.push(inputTypeTrimmed);
+    }
+    values.push(petId);
+
+    const updateQuery = `UPDATE appointments SET ${updates.join(
+      ", "
+    )} WHERE pet_id = $${values.length} RETURNING *;`;
+
+    const updateResult = await pool.query(updateQuery, values);
+    return res.status(200).json({
+      message: "התור עודכן בהצלחה.",
+      appointment: updateResult.rows[0],
+    });
+  } catch (error) {
+    console.error("שגיאה בעדכון תור קיים: ", error);
+    return res.status(500).json({ message: "שגיאה בעדכון תור קיים." });
+  }
+};
+
 // Helper functions
 const getDoctorWithFewestAppointments = async (dateTime) => {
   const date = dateTime.split(" ")[0];
@@ -391,4 +470,5 @@ module.exports = {
   getFutureAppointmentsForOwner,
   getPreviousAppointmentsForPet,
   getFutureAppointmentsForPet,
+  updateAppointment,
 };
