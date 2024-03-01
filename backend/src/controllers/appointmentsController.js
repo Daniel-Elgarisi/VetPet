@@ -152,7 +152,7 @@ const getAppointmentsByOwner = async (req, res) => {
 };
 
 const deleteAppointment = async (req, res) => {
-  const { date, time, petId } = req.body;
+  const { date, time, petId } = req.query;
 
   console.log("date:", date, "time:", time, "petId:", petId);
 
@@ -186,7 +186,7 @@ const getAppointmentTypes = async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM appointments_types");
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "No appointment types found." });
+      return res.status(404).json({ message: "לא נמצאו סוגי פגישות." });
     }
     res.json(result.rows);
   } catch (error) {
@@ -327,10 +327,6 @@ const updateAppointment = async (req, res) => {
   const petId = parseInt(req.params.pet_id, 10);
   const { date, time, appointmentType } = req.body;
 
-  console.log(
-    `Received for update: petId=${petId}, date=${date}, time=${time}, appointmentType=${appointmentType}`
-  );
-
   if (!date && !time && !appointmentType) {
     return res
       .status(400)
@@ -351,7 +347,6 @@ const updateAppointment = async (req, res) => {
       return res.status(404).json({ message: "לא נמצא תור קיים." });
     }
     const currentAppointment = result.rows[0];
-    console.log(`Current appointment:`, currentAppointment);
 
     // Trim the appointment types for comparison
     const currentTypeTrimmed = currentAppointment.appointment_type.trim();
@@ -367,9 +362,6 @@ const updateAppointment = async (req, res) => {
         : null;
     const isDateChanged =
       inputDateTime && inputDateTime !== currentAppointment.date.toISOString();
-    console.log(
-      `isDateChanged: ${isDateChanged}, isTypeChanged: ${isTypeChanged}`
-    );
 
     if (!isDateChanged && !isTypeChanged) {
       return res.status(200).json({ message: "אין שינויים לעדכון." });
