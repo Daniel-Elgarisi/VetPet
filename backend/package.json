@@ -4,7 +4,7 @@
   "description": "Backend service for the Pet Health Tracker mobile application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test jest --verbose --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +19,10 @@
     "pg": "^8.11.3",
     "redis": "^4.6.13",
     "twilio": "^4.22.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }

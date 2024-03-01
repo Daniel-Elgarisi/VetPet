@@ -23,11 +23,8 @@ const getPetsByOwnerId = async (req, res) => {
         id: pet.id,
         name: pet.name,
       }));
-      console.log(petsData);
       res.status(200).json(petsData);
     }
-
-    // console.log(pets.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).send("שגיאה בהחזרת חיות מחמד לבעלים.");
@@ -35,18 +32,17 @@ const getPetsByOwnerId = async (req, res) => {
 };
 
 const getFullPetInformation = async (req, res) => {
-  const ownerId = parseInt(req.params.id, 10);
-  console.log(ownerId);
+  const petId = parseInt(req.params.pet_id, 10);
 
-  if (isNaN(ownerId)) {
-    return res.status(400).send({ message: "Owner ID must be a number." });
+  if (isNaN(petId)) {
+    return res.status(400).send({ message: "petId ID must be a number." });
   }
 
   try {
     const pets = await pool.query(
       `SELECT name, sex, pet_type, breed, weight, chip_number, dateofbirth
-       FROM pets_profile WHERE owner_id = $1`,
-      [ownerId]
+       FROM pets_profile WHERE id = $1`,
+      [petId]
     );
 
     if (pets.rows.length === 0) {
@@ -62,7 +58,6 @@ const getFullPetInformation = async (req, res) => {
         dateofbirth: moment(pet.dateofbirth).format("DD-MM-YYYY"),
         chip_number: pet.chip_number,
       }));
-      console.log(petsData);
       res.status(200).json(petsData);
     }
   } catch (error) {

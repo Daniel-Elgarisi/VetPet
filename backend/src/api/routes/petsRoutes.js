@@ -6,6 +6,6 @@ const {
 } = require("../../controllers/petsController");
 
 router.get("/get-pets/:id", getPetsByOwnerId);
-router.get("/get-fullPetInformation/:id", getFullPetInformation);
+router.get("/get-fullPetInformation/:pet_id", getFullPetInformation);
 
 module.exports = router;
