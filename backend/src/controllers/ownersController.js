@@ -13,6 +13,12 @@ const getOwners = async (req, res) => {
 const editOwnersProfile = async (req, res) => {
   const ownerId = parseInt(req.params.id, 10);
 
+  if (isNaN(ownerId)) {
+    return res
+      .status(400)
+      .send({ message: "המזהה של הבעלים חייב להיות מספר." });
+  }
+
   const updates = req.body;
 
   let updateFields = [];
@@ -44,7 +50,7 @@ const editOwnersProfile = async (req, res) => {
     if (updateOwner.rowCount === 0) {
       return res.status(404).send("לא נמצא בעל חיית מחמד");
     }
-    res.json({
+    res.status(200).json({
       message: "Owner was updated",
       owner: updateOwner.rows[0],
     });

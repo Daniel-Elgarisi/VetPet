@@ -3,10 +3,24 @@ pipeline{
         label "local_agent"
     }
     stages{
-        stage("list Images"){
+        stage("build"){
             steps{
-                bat "docker images"
+                dir("backend"){
+                    bat "npm install"
+                }
             }
+        }
+        stage("integration tests"){
+            steps{
+                dir("backend"){
+                    bat "npm test"
+                }
+            }
+        }
+    }
+    post{
+        always{
+            deleteDir()
         }
     }
 }

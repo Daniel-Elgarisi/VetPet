@@ -9,8 +9,6 @@ const petsRoutes = require("./api/routes/petsRoutes");
 const authRoutes = require("./api/routes/authRoutes");
 const appointmentsRoutes = require("./api/routes/appointmentsRoutes");
 
-const port = process.env.PORT || 5000;
-
 app.use(express.json());
 
 app.use(cors());
@@ -19,6 +17,12 @@ app.use("/owners", ownersRoutes);
 app.use("/auth", authRoutes);
 app.use("/appointments", appointmentsRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+let server;
+if (process.env.NODE_ENV !== "test") {
+  const port = process.env.PORT || 5000;
+  server = app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+}
+
+module.exports = { app, server };
