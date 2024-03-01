@@ -1,0 +1,12 @@
+pipline{
+    agent{
+        label "local_agent"
+    }
+    stages{
+        stage("list Images"){
+            steps{
+                bat "docker images"
+            }
+        }
+    }
+}
