@@ -34,22 +34,26 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "supertest": "^6.3.4"
   },
   "jest": {
-  "reporters": [
-    "default",
-    ["jest-junit", {
-      "outputDirectory": "./coverage",
-      "outputName": "clover.xml"
-    }]
-  ],
-  "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "src/utils",
-    "src/api/middlewares",
-    "src/controllers/paypalController.js",
-    "src/controllers/stripeController.js"
-  ]
-}
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "./coverage",
+          "outputName": "clover.xml"
+        }
+      ]
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "src/utils",
+      "src/api/middlewares",
+      "src/controllers/paypalController.js",
+      "src/controllers/stripeController.js"
+    ]
+  }
 }
