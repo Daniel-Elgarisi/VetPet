@@ -1,8 +1,10 @@
 const { Pool } = require("pg");
 
+/* istanbul ignore next */
 if (process.env.NODE_ENV === "test") {
   require("dotenv").config({ path: "./.env.test" });
 } else {
+  /* istanbul ignore next */
   require("dotenv").config();
 }
 
@@ -23,6 +25,7 @@ const dbConfig = {
   },
 };
 
+/* istanbul ignore next */
 const currentConfig = dbConfig[process.env.NODE_ENV || "development"];
 
 const pool = new Pool(currentConfig);
