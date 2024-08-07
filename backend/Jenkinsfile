@@ -4,14 +4,14 @@ pipeline{
         stage("build"){
             steps{
                 dir("backend"){
-                    bat "npm install"
+                    sh "npm install"
                 }
             }
         }
         stage("integration tests"){
             steps{
                 dir("backend"){
-                    bat "npm test"
+                    sh "npm test"
                 }
             }
         }
