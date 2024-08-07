@@ -1,7 +1,5 @@
 pipeline{
-    agent{
-        label "local_agent"
-    }
+    agent any
     stages{
         stage("build"){
             steps{
