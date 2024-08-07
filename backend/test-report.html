@@ -1,0 +1,260 @@
+<html><head><meta charset="utf-8"/><title>Test Report</title><style type="text/css">html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+body {
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: #777;
+  margin-top: 0.5rem;
+}
+
+/** SUMMARY */
+#summary {
+  color: #333;
+  margin: 2rem 0;
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 2rem;
+  background: #eee;
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 2rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: #4f8a10;
+  border-left: 0.4rem solid #4f8a10;
+  padding-left: 0.5rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: #d8000c;
+  border-left: 0.4rem solid #d8000c;
+  padding-left: 0.5rem;
+}
+.summary-pending {
+  color: #9f6000;
+  border-left: 0.4rem solid #9f6000;
+  padding-left: 0.5rem;
+}
+.summary-empty {
+  color: #999;
+  border-left: 0.4rem solid #999;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: #dff2bf;
+  color: #4f8a10;
+}
+.test-result.failed {
+  background-color: #ffbaba;
+  color: #d8000c;
+}
+.test-result.pending {
+  background-color: #ffdf61;
+  color: #9f6000;
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed #d8000c;
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 2rem;
+}
+.suite-container > input[type="checkbox"] {
+  position: absolute;
+  left: -100vw;
+}
+.suite-container label {
+  display: block;
+}
+.suite-container .suite-tests {
+  overflow-y: hidden;
+  height: 0;
+}
+.suite-container > input[type="checkbox"]:checked ~ .suite-tests {
+  height: auto;
+  overflow: visible;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: #eee;
+  color: #777;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.75rem;
+}
+.suite-info .suite-time.warn {
+  background-color: #d8000c;
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transform: rotate(0deg);
+}
+.suite-container > input[type="checkbox"]:checked ~ label .suite-info:before {
+  transform: rotate(180deg);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: #efefef;
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: #777;
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: #000;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: #ffbaba;
+  color: #d8000c;
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: #000;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><div class="jesthtml-content"><header><h1 id="title">Test Report</h1></header><div id="metadata-container"><div id="timestamp">Started: 2024-07-16 11:53:19</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (8)</div><div class="summary-passed ">8 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (35)</div><div class="summary-passed ">35 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></div><div id="suite-1" class="suite-container"><input id="collapsible-0" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-0"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\referencesController.test.js</div><div class="suite-time">1.285s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">References API Integration Tests &gt; GET /references/get-references/:pet_id</div><div class="test-title">should return status 200 OK and references for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.139s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">References API Integration Tests &gt; GET /references/get-references/:pet_id</div><div class="test-title">should return 404 Not Found if no references exist for the given pet</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">References API Integration Tests &gt; GET /references/get-references/:pet_id</div><div class="test-title">should return 400 if pet_id is not a number</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">References API Integration Tests &gt; GET /references/get-references/:pet_id</div><div class="test-title">should return 404 if pet is not found</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div></div></div><div id="suite-2" class="suite-container"><input id="collapsible-1" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-1"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\appointmentsController.test.js</div><div class="suite-time">0.454s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-previousAppointmentsForOwner/:id</div><div class="test-title">should return 200 OK and previous appointments for a valid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.065s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-previousAppointmentsForOwner/:id</div><div class="test-title">should return 404 Not Found if no previous appointments exist</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-futureAppointmentsForOwner/:id</div><div class="test-title">should return 200 OK and future appointments for a valid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-futureAppointmentsForOwner/:id</div><div class="test-title">should return 404 Not Found if no future appointments exist</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-previousAppointments/:pet_id</div><div class="test-title">should return 200 OK and previous appointments for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-previousAppointments/:pet_id</div><div class="test-title">should return 404 Not Found if no previous appointments exist</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-futureAppointments/:pet_id</div><div class="test-title">should return 200 OK and future appointments for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-futureAppointments/:pet_id</div><div class="test-title">should return 404 Not Found if no future appointments exist</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-AppointmentTypes</div><div class="test-title">should return a list of appointment types</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Appointments API Integration Tests &gt; GET /appointments/get-NonAvailableAppointmentsForDay/:date</div><div class="test-title">should return fully booked time slots for a given day</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div></div></div><div id="suite-3" class="suite-container"><input id="collapsible-2" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-2"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\recordsController.test.js</div><div class="suite-time">0.416s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Records API Integration Tests &gt; GET /records/get-records/:pet_id</div><div class="test-title">should return status 200 OK and records for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.1s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Records API Integration Tests &gt; GET /records/get-records/:pet_id</div><div class="test-title">should return 404 Not Found if no records exist for the given pet</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Records API Integration Tests &gt; GET /records/get-records/:pet_id</div><div class="test-title">should return 400 if pet_id is not a number</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Records API Integration Tests &gt; GET /records/get-records/:pet_id</div><div class="test-title">should return 404 if pet is not found</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div></div></div><div id="suite-4" class="suite-container"><input id="collapsible-3" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-3"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\vaccineController.test.js</div><div class="suite-time">0.39s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Vaccine API Integration Tests &gt; GET /vaccines/get-vaccines/:pet_id/:dateofbirth</div><div class="test-title">should return status 200 OK and vaccines for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.071s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Vaccine API Integration Tests &gt; GET /vaccines/get-vaccines/:pet_id/:dateofbirth</div><div class="test-title">should return 404 Not Found if no vaccines exist</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Vaccine API Integration Tests &gt; GET /vaccines/get-vaccines-notifications/:pet_id/:pet_type</div><div class="test-title">should return status 200 OK and vaccines notifications for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Vaccine API Integration Tests &gt; GET /vaccines/get-vaccines-notifications/:pet_id/:pet_type</div><div class="test-title">should return 404 Not Found if no vaccines notifications exist</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div></div></div><div id="suite-5" class="suite-container"><input id="collapsible-4" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-4"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\ownersController.test.js</div><div class="suite-time">0.407s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Owners API Integration Tests &gt; POST /owners/edit-ownersProfile/:id</div><div class="test-title">should return 400 Bad Request for invalid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.022s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Owners API Integration Tests &gt; POST /owners/edit-ownersProfile/:id</div><div class="test-title">should return 404 Not Found for a non-existent owner ID</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Owners API Integration Tests &gt; POST /owners/edit-ownersProfile/:id</div><div class="test-title">should return 200 OK and the updated owner for a valid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.017s</div></div></div></div></div><div id="suite-6" class="suite-container"><input id="collapsible-5" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-5"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\prescriptionsController.test.js</div><div class="suite-time">0.373s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Prescriptions API Integration Tests &gt; GET /prescriptions/get-prescriptions-detail/:pet_id</div><div class="test-title">should return status 200 OK and prescriptions for a valid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.062s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Prescriptions API Integration Tests &gt; GET /prescriptions/get-prescriptions-detail/:pet_id</div><div class="test-title">should return 404 Not Found if no prescriptions exist for the given pet</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Prescriptions API Integration Tests &gt; GET /prescriptions/get-prescriptions-detail/:pet_id</div><div class="test-title">should return 400 if pet_id is not a number</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Prescriptions API Integration Tests &gt; GET /prescriptions/get-prescriptions-detail/:pet_id</div><div class="test-title">should return 404 if pet is not found</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div></div></div><div id="suite-7" class="suite-container"><input id="collapsible-6" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-6"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\petsController.test.js</div><div class="suite-time">0.359s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Pets API Integration Tests &gt; GET /pets/get-pets/:id</div><div class="test-title">should return 400 Bad Request for invalid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Pets API Integration Tests &gt; GET /pets/get-pets/:id</div><div class="test-title">should return 404 Not Found for a non-existent owner ID</div><div class="test-status">passed</div><div class="test-duration">0.052s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Pets API Integration Tests &gt; GET /pets/get-fullPetInformation/:pet_id</div><div class="test-title">should return 400 Bad Request for invalid pet ID</div><div class="test-status">passed</div><div class="test-duration">0.007s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Pets API Integration Tests &gt; GET /pets/get-fullPetInformation/:pet_id</div><div class="test-title">should return 404 Not Found for a non-existent pet ID</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div></div></div><div id="suite-8" class="suite-container"><input id="collapsible-7" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-7"><div class="suite-info"><div class="suite-path">C:\Users\danie\Desktop\Final Project\Code\VetPet\backend\src\tests\notificationsCountController.test.js</div><div class="suite-time">0.143s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Notifications Count API Integration Tests &gt; GET /notificationsCount/get-total-notifications-count/:id</div><div class="test-title">should return status 200 OK and total notifications count for a valid owner ID</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Notifications Count API Integration Tests &gt; GET /notificationsCount/get-total-notifications-count/:id</div><div class="test-title">should return 404 Not Found if no owner exists</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div></div></div></div></body></html>
