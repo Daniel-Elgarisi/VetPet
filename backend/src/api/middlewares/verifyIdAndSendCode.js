@@ -35,4 +35,39 @@ const verifyIdAndSendCode = async (req, res) => {
   }
 };
 
-module.exports = { verifyIdAndSendCode, otpStore };
+const verifyVetIdAndSendCode = async (req, res) => {
+  const { license } = req.body;
+  console.log("Vet ID:", license);
+
+  try {
+    const result = await pool.query(
+      "SELECT email FROM doctor_profile WHERE license = $1",
+      [license]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("מספר רישיון לא נמצא.");
+    }
+
+    const vetEmail = result.rows[0].email;
+
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+    const expiry = Date.now() + 180000;
+    otpStore[license] = { code: verificationCode, expiry };
+    console.log("Generated code:", verificationCode);
+
+    const emailSent = await sendEmail(vetEmail, verificationCode);
+
+    if (emailSent) {
+      console.log("Verification code sent via email.");
+      res.status(200).json({ message: "קוד האימות נשלח לאימייל שלך." });
+    } else {
+      throw new Error("שליחת האימייל נכשלה.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("שגיאת שרת.");
+  }
+};
+
+module.exports = { verifyIdAndSendCode, otpStore, verifyVetIdAndSendCode };
