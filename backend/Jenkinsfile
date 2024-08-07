@@ -1,6 +1,7 @@
 pipeline{
     agent any
     environment {
+        NODE_ENV = "test"
         TEST_DB_USER="postgres"
         TEST_DB_PASSWORD="123"
         TEST_DB_HOST="host.docker.internal"
