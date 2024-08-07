@@ -38,22 +38,22 @@
     "supertest": "^6.3.4"
   },
   "jest": {
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "./coverage",
-          "outputName": "clover.xml"
-        }
-      ]
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "src/utils",
-      "src/api/middlewares",
-      "src/controllers/paypalController.js",
-      "src/controllers/stripeController.js"
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "./coverage",
+        "outputName": "clover.xml"
+      }
     ]
-  }
+  ],
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "src/utils",
+    "src/api/middlewares",
+    "src/controllers/paypalController.js",
+    "src/controllers/stripeController.js"
+  ]
+}
 }
