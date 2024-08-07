@@ -22,8 +22,8 @@ pipeline {
             steps {
                 dir('backend') {
                     sh 'npm test'
-                    sh 'ls -l coverage' // Debugging step
-                    sh 'cat coverage/clover.xml' // Debugging step to print the XML contents
+                    sh 'ls -l reports' // Debugging step to verify report directory
+                    sh 'cat reports/junit.xml' // Debugging step to print the XML contents
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         always {
             dir('backend') {
                 archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
-                junit 'coverage/clover.xml'
+                junit 'reports/junit.xml'
                 publishHTML(target: [
                     reportName : 'Coverage Report',
                     reportDir  : 'coverage/lcov-report',
