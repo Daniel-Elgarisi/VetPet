@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_DB: PetHealthTrackerDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      # - A:/PostgreSQL16/data:/var/lib/postgresql/data
+      # - A:/PostgreSQL16/data/base:/var/lib/postgresql/data/base
+      # - C:/Users/danie/Documents/schema:/docker-entrypoint-initdb.d
+      - C:/Users/danie/Documents/postgres-linux-data/data:/var/lib/postgresql/data
+    networks:
+      - vetpet-network
+
+  backend:
+    image: vetpet-tools
+    container_name: vetpet_tools_container
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: 123
+      DB_HOST: my_postgres
+      DB_PORT: 5432
+      DB_DATABASE: PetHealthTrackerDB
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - vetpet-network
+
+networks:
+  vetpet-network:
+    driver: bridge
+
+# volumes:
+  # postgres_data:

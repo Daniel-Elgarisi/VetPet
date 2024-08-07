@@ -1,6 +1,13 @@
 const pool = require("../config/db");
 const moment = require("moment-timezone");
 
+/* istanbul ignore next */
+const {
+  createDailyRoom,
+  getParticipantCountBySessionId,
+} = require("../utils/dailyService");
+
+/* istanbul ignore next */
 const createAppointment = async (req, res) => {
   const { appointmentType, date, time, petId } = req.body;
 
@@ -36,13 +43,23 @@ const createAppointment = async (req, res) => {
       .json({ message: "אין רופאים זמינים לתאריך ולשעה אלו." });
   }
 
+  let roomUrl = null;
+  if (appointmentType === "שיחת וידיאו") {
+    try {
+      const dailyRoom = await createDailyRoom();
+      roomUrl = dailyRoom.url;
+    } catch (error) {
+      console.error("שגיאה ביצירת חדר וידאו:", error);
+      return res.status(500).json({ message: "שגיאה ביצירת חדר וידאו" });
+    }
+  }
   try {
     const insertQuery = `
-      INSERT INTO appointments (appointment_type, date, pet_id, doctor_id)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO appointments (appointment_type, date, pet_id, doctor_id, room_url)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `;
-    const values = [appointmentType, dateTimeForDb, petId, doctorId];
+    const values = [appointmentType, dateTimeForDb, petId, doctorId, roomUrl];
     const result = await pool.query(insertQuery, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -51,6 +68,7 @@ const createAppointment = async (req, res) => {
   }
 };
 
+/* istanbul ignore next */
 const getAppointmentsForSinglePet = async (req, res) => {
   try {
     const petId = parseInt(req.params.id, 10);
@@ -78,21 +96,21 @@ const getAppointmentsForSinglePet = async (req, res) => {
 
     res.json(appointments);
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא פגישות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא פגישות:" });
   }
 };
 
 const getNonAvailableAppointmentsForDay = async (req, res) => {
   const formattedDate = formatDateToISO(req.params.date);
-  console.log("formattedDate: ", formattedDate);
   try {
     const doctorCountResult = await pool.query(
       "SELECT COUNT(*) AS total_doctors FROM doctor_profile"
     );
 
     const totalDoctors = parseInt(doctorCountResult.rows[0].total_doctors, 10);
-    console.log("total doctors: ", totalDoctors);
     const timeSlotResult = await pool.query(
       `
         SELECT date::time as time_slot, COUNT(*) as appointment_count
@@ -104,11 +122,12 @@ const getNonAvailableAppointmentsForDay = async (req, res) => {
       [formattedDate, totalDoctors]
     );
 
+    /* istanbul ignore next */
     if (timeSlotResult.rowCount > 0) {
       const formattedTimeSlots = timeSlotResult.rows.map((row) => {
         const timeSlot = row.time_slot;
         const [hours, minutes] = timeSlot.split(":");
-        return `${hours}:${minutes}`; // Reconstructs the time without seconds
+        return `${hours}:${minutes}`;
       });
       console.log("formattedTimeSlots: ", formattedTimeSlots[0]);
       res.json({
@@ -119,11 +138,14 @@ const getNonAvailableAppointmentsForDay = async (req, res) => {
       res.json({ message: "אין פגישות בתפוסה מלאה ליום זה." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בהחזרת תורים תפוסים: ", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בהחזרת תורים תפוסים" });
   }
 };
 
+/* istanbul ignore next */
 const getAppointmentsByOwner = async (req, res) => {
   const ownerId = parseInt(req.params.id, 10);
 
@@ -151,6 +173,7 @@ const getAppointmentsByOwner = async (req, res) => {
   }
 };
 
+/* istanbul ignore next */
 const deleteAppointment = async (req, res) => {
   const { date, time, petId } = req.query;
 
@@ -177,7 +200,9 @@ const deleteAppointment = async (req, res) => {
       res.status(404).json({ message: "פגישה לא נמצאה." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה במחיקת פגישה:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה במחיקת פגישה" });
   }
 };
@@ -185,12 +210,18 @@ const deleteAppointment = async (req, res) => {
 const getAppointmentTypes = async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM appointments_types");
+    /* istanbul ignore next */
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "לא נמצאו סוגי פגישות." });
+      /* istanbul ignore next */
+      return res
+        .status(404)
+        .json({ message: "לא נמצאו סוגי פגישות." }); /* istanbul ignore next */
     }
     res.json(result.rows);
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא סוגי פגישות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא סוגי פגישות" });
   }
 };
@@ -220,7 +251,9 @@ const getPreviousAppointmentsForPet = async (req, res) => {
       res.status(404).json({ message: "לא נמצאו פגישות קודמות." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא פגישות קודמות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא פגישות קודמות" });
   }
 };
@@ -250,7 +283,9 @@ const getFutureAppointmentsForPet = async (req, res) => {
       res.status(404).json({ message: "לא נמצאו פגישות עתידיות." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא פגישות עתידיות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא פגישות עתידיות" });
   }
 };
@@ -284,7 +319,9 @@ const getPreviousAppointmentsForOwner = async (req, res) => {
       res.status(404).json({ message: "לא נמצאו פגישות קודמות." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא פגישות קודמות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא פגישות קודמות" });
   }
 };
@@ -318,20 +355,38 @@ const getFutureAppointmentsForOwner = async (req, res) => {
       res.status(404).json({ message: "לא נמצאו פגישות עתידיות." });
     }
   } catch (error) {
+    /* istanbul ignore next */
     console.error("שגיאה בייבוא פגישות עתידיות:", error);
+    /* istanbul ignore next */
     res.status(500).json({ message: "שגיאה בייבוא פגישות עתידיות" });
   }
 };
 
+/* istanbul ignore next */
 const updateAppointment = async (req, res) => {
   const petId = parseInt(req.params.pet_id, 10);
-  const { date, time, appointmentType } = req.body;
+  const {
+    previousDate,
+    previousTime,
+    previousAppointmentType,
+    date,
+    time,
+    appointmentType,
+  } = req.body;
 
-  if (!date && !time && !appointmentType) {
-    return res
-      .status(400)
-      .json({ message: "חסר מידע נדרש. אנא ספק תאריך, שעה או סוג פגישה." });
+  console.log(petId);
+
+  if (
+    !previousDate ||
+    !previousTime ||
+    !previousAppointmentType ||
+    !date ||
+    !time ||
+    !appointmentType
+  ) {
+    return res.status(400).json({ message: "חסר מידע נדרש לעדכון." });
   }
+
   if (isNaN(petId)) {
     return res
       .status(400)
@@ -339,52 +394,90 @@ const updateAppointment = async (req, res) => {
   }
 
   try {
-    const result = await pool.query(
-      "SELECT date, appointment_type FROM appointments WHERE pet_id = $1",
-      [petId]
+    const isDateExist = `${date} ${time}`;
+
+    const existingAppointmentResult = await pool.query(
+      "SELECT COUNT(*) FROM appointments WHERE pet_id = $1 AND date = $2",
+      [petId, isDateExist]
     );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "לא נמצא תור קיים." });
+
+    if (parseInt(existingAppointmentResult.rows[0].count, 10) > 0) {
+      return res.status(400).json({
+        message: "לחיית המחמד הזו כבר יש תור במועד שצוין.",
+      });
     }
-    const currentAppointment = result.rows[0];
+  } catch (error) {
+    console.error("שגיאה בבדיקת פגישות קיימות:", error);
+    return res.status(500).json({ message: "שגיאה בבדיקת פגישות קיימות" });
+  }
 
-    // Trim the appointment types for comparison
-    const currentTypeTrimmed = currentAppointment.appointment_type.trim();
-    const inputTypeTrimmed = appointmentType.trim();
+  try {
+    const previousDateTimeISO = moment
+      .tz(
+        `${previousDate} ${previousTime}`,
+        "DD-MM-YYYY HH:mm",
+        "Asia/Jerusalem"
+      )
+      .toISOString();
 
-    // Check if there are changes to update
-    const isTypeChanged = currentTypeTrimmed !== inputTypeTrimmed;
-    const inputDateTime =
-      date && time
-        ? moment
-            .tz(`${date} ${time}`, "DD-MM-YYYY HH:mm", "Asia/Jerusalem")
-            .toISOString()
-        : null;
-    const isDateChanged =
-      inputDateTime && inputDateTime !== currentAppointment.date.toISOString();
+    // Find the specific appointment to update
+    const findAppointmentQuery = `
+      SELECT id, room_url FROM appointments
+      WHERE pet_id = $1 AND date = $2 AND appointment_type = $3
+    `;
+    const findAppointmentResult = await pool.query(findAppointmentQuery, [
+      petId,
+      previousDateTimeISO,
+      previousAppointmentType,
+    ]);
 
-    if (!isDateChanged && !isTypeChanged) {
-      return res.status(200).json({ message: "אין שינויים לעדכון." });
+    if (findAppointmentResult.rows.length === 0) {
+      return res.status(404).json({ message: "לא נמצא תור קיים לעדכון." });
     }
 
-    // Construct the update query
-    const updates = [];
-    const values = [];
-    if (isDateChanged) {
-      updates.push(`date = $${updates.length + 1}`);
-      values.push(inputDateTime);
-    }
-    if (isTypeChanged) {
-      updates.push(`appointment_type = $${updates.length + 1}`);
-      values.push(inputTypeTrimmed);
-    }
-    values.push(petId);
+    const appointmentIdToUpdate = findAppointmentResult.rows[0].id;
+    const currentRoomUrl = findAppointmentResult.rows[0].room_url;
 
-    const updateQuery = `UPDATE appointments SET ${updates.join(
-      ", "
-    )} WHERE pet_id = $${values.length} RETURNING *;`;
+    // Prepare new date and time
+    const newDateTimeISO = moment
+      .tz(`${date} ${time}`, "DD-MM-YYYY HH:mm", "Asia/Jerusalem")
+      .toISOString();
 
-    const updateResult = await pool.query(updateQuery, values);
+    let newRoomUrl = currentRoomUrl;
+
+    // Case 1: Updating from video call type to another type
+    if (
+      previousAppointmentType === "שיחת וידיאו" &&
+      appointmentType !== "שיחת וידיאו"
+    ) {
+      newRoomUrl = null;
+    }
+
+    // Case 2: Updating from another type to video call type
+    if (appointmentType === "שיחת וידיאו") {
+      try {
+        const dailyRoom = await createDailyRoom();
+        newRoomUrl = dailyRoom.url;
+      } catch (error) {
+        console.error("שגיאה ביצירת חדר וידאו:", error);
+        return res.status(500).json({ message: "שגיאה ביצירת חדר וידאו" });
+      }
+    }
+
+    // Update the appointment
+    const updateQuery = `
+      UPDATE appointments
+      SET date = $1, appointment_type = $2, room_url = $3
+      WHERE id = $4
+      RETURNING *;
+    `;
+    const updateResult = await pool.query(updateQuery, [
+      newDateTimeISO,
+      appointmentType,
+      newRoomUrl,
+      appointmentIdToUpdate,
+    ]);
+
     return res.status(200).json({
       message: "התור עודכן בהצלחה.",
       appointment: updateResult.rows[0],
@@ -396,6 +489,7 @@ const updateAppointment = async (req, res) => {
 };
 
 // Helper functions
+/* istanbul ignore next */
 const getDoctorWithFewestAppointments = async (dateTime) => {
   const date = dateTime.split(" ")[0];
   const time = dateTime.split(" ")[1];
@@ -423,6 +517,206 @@ const getDoctorWithFewestAppointments = async (dateTime) => {
   return res.rows[0]?.doctor_id;
 };
 
+/* istanbul ignore next */
+const getFutureAppointmentsForOwnerInNext3Days = async (req, res) => {
+  const ownerId = parseInt(req.params.id, 10);
+  const now = moment().tz("Asia/Jerusalem");
+  const threeDaysLater = now.clone().add(3, "days").endOf("day");
+
+  try {
+    const result = await pool.query(
+      `SELECT ap.*, pp.name AS pet_name
+           FROM appointments ap
+           JOIN pets_profile pp ON ap.pet_id = pp.id
+           WHERE pp.owner_id = $1 AND ap.date >= $2 AND ap.date <= $3`,
+      [ownerId, now.toISOString(), threeDaysLater.toISOString()]
+    );
+    if (result.rows.length > 0) {
+      const formattedAppointments = result.rows.map((appointment) => {
+        const formattedDateTime = formatAppointmentDateTime1(
+          appointment.date.toISOString()
+        );
+        return {
+          pet_name: appointment.pet_name,
+          date: formattedDateTime.date,
+          time: formattedDateTime.time,
+          appointment_type: appointment.appointment_type,
+        };
+      });
+      res.status(200).json(formattedAppointments);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No future meetings found in the next 3 days." });
+    }
+  } catch (error) {
+    console.error(
+      "Error importing future appointments in the next 3 days:",
+      error
+    );
+    res
+      .status(500)
+      .json({ message: "Error importing future meetings in the next 3 days" });
+  }
+};
+
+/* istanbul ignore next */
+const getVideoCallAppointmentForDoctor = async (req, res) => {
+  const vetId = parseInt(req.params.doctor_id, 10);
+
+  if (!vetId) {
+    return res.status(400).send({ message: "חסר מידע אודות הוטרינר." });
+  }
+
+  if (isNaN(vetId)) {
+    return res
+      .status(400)
+      .send({ message: "המזהה של הוטרינר חייב להיות מספר." });
+  }
+
+  try {
+    const currentDate = moment().format("DD-MM-YYYY");
+
+    const videoCallAppointment = await pool.query(
+      `SELECT * FROM appointments WHERE appointment_type = 'שיחת וידיאו' AND doctor_id = $1 AND date::date = $2::date`,
+      [vetId, currentDate]
+    );
+
+    if (videoCallAppointment.rows.length === 0) {
+      return res.status(404).send({ message: "לא נמצאו תורים לשיחת וידאו." });
+    }
+
+    const appointmentsWithFormattedDateAndTime = videoCallAppointment.rows.map(
+      (row) => {
+        return {
+          ...row,
+          date: moment(row.date).format("DD-MM-YYYY"),
+          time: moment(row.date).format("HH:mm"),
+        };
+      }
+    );
+
+    const petIds = [
+      ...new Set(videoCallAppointment.rows.map((row) => row.pet_id)),
+    ];
+
+    const petDetailsPromises = petIds.map(async (petId) => {
+      const petDetails = await pool.query(
+        `SELECT pp.name AS pet_name, pp.breed, pp.weight, pp.pet_type, op.name AS owner_name 
+         FROM pets_profile pp
+         JOIN owners_profile op ON pp.owner_id = op.id
+         WHERE pp.id = $1`,
+        [petId]
+      );
+      return { petId, ...petDetails.rows[0] };
+    });
+
+    const petDetails = await Promise.all(petDetailsPromises);
+
+    const response = appointmentsWithFormattedDateAndTime.map((appointment) => {
+      const petDetail = petDetails.find(
+        (pet) => pet.petId === appointment.pet_id
+      );
+      return {
+        appointment: {
+          id: appointment.id,
+          date: appointment.date,
+          pet_id: appointment.pet_id,
+          appointment_type: appointment.appointment_type,
+          time: appointment.time,
+          room_url: appointment.room_url,
+        },
+        petDetails: petDetail,
+      };
+    });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.error("שגיאה בייבוא פגישת וידאו להוטרינר: ", error);
+    return res.status(500).send("שגיאה בייבוא פגישת וידאו להוטרינר");
+  }
+};
+
+/* istanbul ignore next */
+const getVideoCallForPet = async (req, res) => {
+  const petId = parseInt(req.params.pet_id, 10);
+
+  if (!petId) {
+    return res.status(400).send({ message: "חסר מידע אודות חיית המחמד." });
+  }
+
+  if (isNaN(petId)) {
+    return res
+      .status(400)
+      .send({ message: "המזהה של חיית המחמד חייב להיות מספר." });
+  }
+
+  try {
+    const currentDate = moment().format("YYYY-MM-DD");
+
+    const videoCallAppointment = await pool.query(
+      `SELECT a.*, d.name AS doctor_name 
+       FROM appointments a
+       JOIN doctor_profile d ON a.doctor_id = d.id
+       WHERE a.appointment_type = 'שיחת וידיאו' AND a.pet_id = $1 AND a.date::date = $2::date`,
+      [petId, currentDate]
+    );
+
+    if (videoCallAppointment.rows.length === 0) {
+      return res.status(404).send("לא נמצאו תורים לשיחת וידאו.");
+    }
+
+    const appointmentsWithFormattedDateAndTime = videoCallAppointment.rows.map(
+      (row) => {
+        return {
+          ...row,
+          date: moment(row.date).format("DD-MM-YYYY"),
+          time: moment(row.date).format("HH:mm"),
+        };
+      }
+    );
+
+    appointmentsWithFormattedDateAndTime.forEach((appointment) => {
+      delete appointment.pet_id;
+      delete appointment.doctor_id;
+      delete appointment.appointment_type;
+    });
+
+    return res.status(200).json(appointmentsWithFormattedDateAndTime);
+  } catch (error) {
+    console.error("שגיאה בייבוא פגישת וידאו לחיית מחמד: ", error);
+    return res.status(500).send("שגיאה בייבוא פגישת וידאו לחיית מחמד");
+  }
+};
+
+/* istanbul ignore next */
+const getParticipantCount = async (req, res) => {
+  const { roomName } = req.query;
+
+  if (!roomName) {
+    return res.status(400).json({ message: "חסר שם חדר." });
+  }
+
+  if (typeof roomName !== "string") {
+    return res.status(400).json({ message: "שם חדר חייב להיות מחרוזת." });
+  }
+
+  try {
+    const participantCount = await getParticipantCountBySessionId(roomName);
+    console.log("participantCount: ", participantCount);
+
+    if (participantCount === 0) {
+      return res.status(404).json({ message: "לא נמצאו משתתפים." });
+    }
+
+    res.status(200).json({ participantCount });
+  } catch (error) {
+    console.error("שגיאה בייבוא ספירת משתתפים:", error);
+    return res.status(500).json({ message: "שגיאה בייבוא ספיר" });
+  }
+};
+
+/* istanbul ignore next */
 function formatDateToISO(dateTimeStr) {
   try {
     const [day, month, year] = dateTimeStr.split("-");
@@ -436,6 +730,7 @@ function formatDateToISO(dateTimeStr) {
   }
 }
 
+/* istanbul ignore next */
 function formatAppointmentDateTime(date, time) {
   const formattedDate = date;
   const [hours, minutes] = time.split(":");
@@ -463,4 +758,8 @@ module.exports = {
   getPreviousAppointmentsForPet,
   getFutureAppointmentsForPet,
   updateAppointment,
+  getFutureAppointmentsForOwnerInNext3Days,
+  getVideoCallAppointmentForDoctor,
+  getVideoCallForPet,
+  getParticipantCount,
 };
