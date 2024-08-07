@@ -9,8 +9,8 @@ const cors = require("cors");
 const app = express();
 
 // Load SSL certificate and key
-const key = fs.readFileSync(path.join(__dirname, "decrypted_key.pem"));
-const cert = fs.readFileSync(path.join(__dirname, "cert.crt"));
+// const key = fs.readFileSync(path.join(__dirname, "decrypted_key.pem"));
+// const cert = fs.readFileSync(path.join(__dirname, "cert.crt"));
 
 //routes
 const ownersRoutes = require("./api/routes/ownersRoutes");
