@@ -1,33 +1,46 @@
-pipeline{
+pipeline {
     agent any
     environment {
         NODE_ENV = "test"
-        TEST_DB_USER="postgres"
-        TEST_DB_PASSWORD="123"
-        TEST_DB_HOST="host.docker.internal"
-        TEST_DB_PORT="5432"
-        TEST_DB_DATABASE="PetHealthTrackerTestDB"
-        TEST_EMAIL_USER="vetpetapplication@gmail.com"
-        TEST_EMAIL_PASSWORD="ewwf rmkc jnin ybcw"
+        TEST_DB_USER = "postgres"
+        TEST_DB_PASSWORD = "123"
+        TEST_DB_HOST = "host.docker.internal"
+        TEST_DB_PORT = "5432"
+        TEST_DB_DATABASE = "PetHealthTrackerTestDB"
+        TEST_EMAIL_USER = "vetpetapplication@gmail.com"
+        TEST_EMAIL_PASSWORD = "ewwf rmkc jnin ybcw"
     }
-    stages{
-        stage("build"){
-            steps{
-                dir("backend"){
-                    sh "npm install"
+    stages {
+        stage('Build') {
+            steps {
+                dir('backend') {
+                    sh 'npm install'
                 }
             }
         }
-        stage("integration tests"){
-            steps{
-                dir("backend"){
-                    sh "npm test"
+        stage('Integration Tests') {
+            steps {
+                dir('backend') {
+                    sh 'npm test'
+                    sh 'ls -l coverage' // Debugging step
+                    sh 'cat coverage/clover.xml' // Debugging step to print the XML contents
                 }
             }
         }
     }
-    post{
-        always{
+    post {
+        always {
+            dir('backend') {
+                archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
+                junit 'coverage/clover.xml'
+                publishHTML(target: [
+                    reportName : 'Coverage Report',
+                    reportDir  : 'coverage/lcov-report',
+                    reportFiles: 'index.html',
+                    alwaysLinkToLastBuild: true,
+                    keepAll    : true
+                ])
+            }
             deleteDir()
         }
     }
