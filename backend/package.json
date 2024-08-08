@@ -55,6 +55,9 @@
       "src/controllers/paypalController.js",
       "src/controllers/stripeController.js"
     ],
-    "coverageReporters": ["text", "cobertura"]
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
   }
 }
