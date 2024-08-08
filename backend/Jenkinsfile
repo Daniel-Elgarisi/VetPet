@@ -22,8 +22,6 @@ pipeline {
             steps {
                 dir('backend') {
                     sh 'npm test'
-                    sh 'ls -l reports' // Debugging step to verify report directory
-                    sh 'cat reports/junit.xml' // Debugging step to print the XML contents
                 }
             }
         }
@@ -40,6 +38,7 @@ pipeline {
                     alwaysLinkToLastBuild: true,
                     keepAll    : true
                 ])
+                publishCoverage adapters: [cobertura('coverage/cobertura-coverage.xml')]
             }
             deleteDir()
         }
