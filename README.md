@@ -14,18 +14,44 @@
 
 ### Introduction
 
-VetPet is a comprehensive application intended for veterinary institutions and pet owners in Israel. It aims to bridge the gap in digital veterinary services by providing a comprehensive platform for pet health management. The application strengthens communication channels, centralizes health information, integrates proactive health management tools, and streamlines administrative processes. Key features include viewing visit summaries, managing appointments, payments, viewing receipts, tracking test results, vaccination records, viewing medications and prescriptions, referrals, and video calls with a veterinarian.
+VetPet is a comprehensive application intended for veterinary institutions and pet owners in Israel. It aims to bridge the gap in digital veterinary services by providing a comprehensive platform for pet health management. The application strengthens communication channels, centralizes health information, integrates proactive health management tools, and streamlines administrative processes. Key features include viewing visit summaries, managing appointments, payments, viewing receipts, tracking test results, vaccination records, viewing medications and prescriptions, referrals, and video calls with a veterinarian and more.
 
 ### Features
 
-- **Client Management:** Store and manage client and pet information.
-- **Referrals:** Create and manage referrals for various tests and procedures.
-- **Photographs:** Upload and manage pet photographs.
-- **Veterinary Activities:** Track and manage all veterinary-related actions.
-- **Appointments and Payments:** Manage appointments and payments, including viewing receipts.
-- **Health Records:** Track vaccination records, medications, and prescriptions.
-- **Video Consultations:** Schedule and conduct video calls with veterinarians.
-- **User-Friendly Interface:** Intuitive and easy-to-use interface for veterinary professionals.
+- **Pet Owners:**
+
+  - **Pet Owners Menu:**
+
+    - Secure Access
+    - My Pet Owners Menu
+    - Personal Details Management
+    - My Appointments
+    - Real-Time Alerts for:
+      - Periodic Vaccinations
+      - Upcoming Appointments
+      - Payments
+    - Manage Payments and Receipts
+    - User Assistance Guide
+
+  - **Each Pet Menu:**
+    - My Profile
+    - Appointments Management
+    - Health Records:
+      - Vaccinations
+      - Test Results
+      - Visit Summaries
+      - Referrals
+      - Medications and Prescriptions
+    - Communication:
+      - Chat with the Veterinary Institution
+      - Video Call with a Veterinarian
+
+- **Veterinarians:**
+  - Secure Access
+  - Manage Personal Details:
+    - Update and View Profile
+  - Communication:
+    - Manage Video Calls with Pet Owners
 
 ### Built With
 
