@@ -8,9 +8,10 @@
    <!-- 4. [Installation](#installation) -->
    <!-- 5. [Usage](#usage) -->
    <!-- 6. [Configuration](#configuration) -->
-4. [Environment Variables](#environment-variables)
+4. [Environment Variables](#set-up-environment-variables)
 5. [Database Setup](#database-setup)
-6. [Contact](#contact)
+6. [License](#license)
+7. [Contact](#contact)
 
 ---
 
@@ -237,10 +238,12 @@ To create the database using this script, the user can follow these steps:
 
 ---
 
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
 ### Contact
 
 For any questions or support, please contact us at [vetpetapplication@gmail.com].
-
-```
-
-```
