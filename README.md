@@ -8,13 +8,17 @@
 4. [Installation](#installation)
 5. [Usage](#usage)
 6. [Configuration](#configuration)
-7. [Contributing](#contributing)
+7. [Environment Variables](#environment-variables)
 8. [Database Setup](#database-setup)
 9. [Contact](#contact)
+
+---
 
 ### Introduction
 
 VetPet is a comprehensive application intended for veterinary institutions and pet owners in Israel. It aims to bridge the gap in digital veterinary services by providing a comprehensive platform for pet health management. The application strengthens communication channels, centralizes health information, integrates proactive health management tools, and streamlines administrative processes. Key features include viewing visit summaries, managing appointments, payments, viewing receipts, tracking test results, vaccination records, viewing medications and prescriptions, referrals, and video calls with a veterinarian and more.
+
+---
 
 ### Features
 
@@ -52,6 +56,8 @@ VetPet is a comprehensive application intended for veterinary institutions and p
     - Update and View Profile
   - Communication:
     - Manage Video Calls with Pet Owners
+
+---
 
 ### Built With
 
@@ -154,9 +160,11 @@ We welcome contributions from the community! To contribute to VetPet, follow the
    Go to the original repository and create a pull request from your fork.
 -->
 
+---
+
 ### Set Up Environment Variables:
 
-Create a `.env` file in the root directory and add the necessary environment variables as specified in the `.env.example` file.
+Create a `.env` file in the root directory of backend folder and add the necessary environment variables as specified in the `.env.example` file.
 
 Copy the .env.example file and rename it to .env:
 
@@ -193,6 +201,8 @@ Open the .env file and fill in the necessary environment variables:
 - **Daily API key:**
   - DAILY_API_KEY
 
+---
+
 ### Database Setup
 
 To set up the database for the VetPet application, follow the instructions below.
@@ -220,6 +230,8 @@ To create the database using this script, the user can follow these steps:
    Replace `[username]` with the PostgreSQL username and `[database_name]` with the target database name.
 
 4. **The script will execute and create the entire database schema**.
+
+---
 
 ### Contact
 
