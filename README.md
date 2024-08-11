@@ -1,16 +1,16 @@
-## VetPet Application README
+## VetPet Application
 
 ### Table of Contents
 
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Built With](#built-with)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Configuration](#configuration)
-7. [Environment Variables](#environment-variables)
-8. [Database Setup](#database-setup)
-9. [Contact](#contact)
+   <!-- 4. [Installation](#installation) -->
+   <!-- 5. [Usage](#usage) -->
+   <!-- 6. [Configuration](#configuration) -->
+4. [Environment Variables](#environment-variables)
+5. [Database Setup](#database-setup)
+6. [Contact](#contact)
 
 ---
 
@@ -162,44 +162,48 @@ We welcome contributions from the community! To contribute to VetPet, follow the
 
 ---
 
-### Set Up Environment Variables:
+### Set Up Environment Variables
 
-Create a `.env` file in the root directory of backend folder and add the necessary environment variables as specified in the `.env.example` file.
+Create a `.env` file in the root directory of the `backend` folder and add the necessary environment variables as specified in the `.env.example` file.
 
-Copy the .env.example file and rename it to .env:
+1. **Locate the .env.example file:**
 
-```bash
-cp .env.example .env
-```
+   The `.env.example` file can be found in the root directory of the `backend` folder.
 
-Fill in Your Environment Variables:
+2. **Copy the .env.example file and rename it to .env:**
 
-Open the .env file and fill in the necessary environment variables:
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
 
-- **Database credentials:**
+3. **Fill in Your Environment Variables:**
 
-  - DB_USER
-  - DB_PASSWORD
-  - DB_HOST
-  - DB_PORT
-  - DB_DATABASE
+   Open the `.env` file and fill in the necessary environment variables:
 
-- **Email credentials:**
+   - **Database credentials:**
 
-  - EMAIL_USER
-  - EMAIL_PASSWORD
+     - `DB_USER`
+     - `DB_PASSWORD`
+     - `DB_HOST`
+     - `DB_PORT`
+     - `DB_DATABASE`
 
-- **PayPal API credentials:**
+   - **Email credentials:**
 
-  - PAYPAL_CLIENT_ID
-  - PAYPAL_CLIENT_SECRET
+     - `EMAIL_USER`
+     - `EMAIL_PASSWORD`
 
-- **Stripe API secret key:**
+   - **PayPal API credentials:**
 
-  - STRIPE_SECRET_KEY
+     - `PAYPAL_CLIENT_ID`
+     - `PAYPAL_CLIENT_SECRET`
 
-- **Daily API key:**
-  - DAILY_API_KEY
+   - **Stripe API secret key:**
+
+     - `STRIPE_SECRET_KEY`
+
+   - **Daily API key:**
+     - `DAILY_API_KEY`
 
 ---
 
@@ -236,3 +240,7 @@ To create the database using this script, the user can follow these steps:
 ### Contact
 
 For any questions or support, please contact us at [vetpetapplication@gmail.com].
+
+```
+
+```
