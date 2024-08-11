@@ -154,6 +154,45 @@ We welcome contributions from the community! To contribute to VetPet, follow the
    Go to the original repository and create a pull request from your fork.
 -->
 
+### Set Up Environment Variables:
+
+Create a `.env` file in the root directory and add the necessary environment variables as specified in the `.env.example` file.
+
+Copy the .env.example file and rename it to .env:
+
+```bash
+cp .env.example .env
+```
+
+Fill in Your Environment Variables:
+
+Open the .env file and fill in the necessary environment variables:
+
+- **Database credentials:**
+
+  - DB_USER
+  - DB_PASSWORD
+  - DB_HOST
+  - DB_PORT
+  - DB_DATABASE
+
+- **Email credentials:**
+
+  - EMAIL_USER
+  - EMAIL_PASSWORD
+
+- **PayPal API credentials:**
+
+  - PAYPAL_CLIENT_ID
+  - PAYPAL_CLIENT_SECRET
+
+- **Stripe API secret key:**
+
+  - STRIPE_SECRET_KEY
+
+- **Daily API key:**
+  - DAILY_API_KEY
+
 ### Database Setup
 
 To set up the database for the VetPet application, follow the instructions below.
