@@ -48,7 +48,7 @@ let server;
 /* istanbul ignore if */
 if (process.env.NODE_ENV !== "test") {
   const port = process.env.PORT || 5000;
-  server = http.createServer({ key, cert }, app).listen(port, () => {
+  server = http.createServer(app).listen(port, () => {
     console.log(`HTTP Server running at http://localhost:${port}`);
   });
 }
