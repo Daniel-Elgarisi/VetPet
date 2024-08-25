@@ -1,28 +1,45 @@
-## VetPet Application
+# VetPet Application
 
-### Table of Contents
+## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Built With](#built-with)
-   <!-- 4. [Installation](#installation) -->
-   <!-- 5. [Usage](#usage) -->
-   <!-- 6. [Configuration](#configuration) -->
-4. [Environment Variables](#set-up-environment-variables)
-5. [Database Setup](#database-setup)
-6. [License](#license)
-7. [Contributors](#contributors)
-8. [Contact](#contact)
+4. [Installation](#installation)
+5. [Environment Variables](#set-up-environment-variables)
+6. [Database Setup](#database-setup)
+7. [License](#license)
+8. [Contributors](#contributors)
+9. [Contact](#contact)
 
 ---
 
-### Introduction
+## Introduction
+
+<div align="center">
+   <h3 style="font-size: 28px; font-weight: bold;">
+      VetPet - Pet Owners Application
+      <img src="images/camera.png" alt="HTML Icon" width="30" style="vertical-align: middle;">
+   </h3>
+   <img src="images/VetPet.png" style="width: 95%; height: auto;">
+</div>
+
+<br>
+
+<div align="center">
+   <h3 style="font-size: 24px; font-weight: bold;">
+      VetPetVideo - Veterinarians Application
+      <img src="images/camera.png" alt="HTML Icon" width="30" style="vertical-align: middle;">
+   </h3>
+   <img src="images/VetPetVideo.png" style="width: 60%; height: auto;">
+</div>
+<br>
 
 VetPet is a comprehensive application intended for veterinary institutions and pet owners in Israel. It aims to bridge the gap in digital veterinary services by providing a comprehensive platform for pet health management. The application strengthens communication channels, centralizes health information, integrates proactive health management tools, and streamlines administrative processes. Key features include viewing visit summaries, managing appointments, payments, viewing receipts, tracking test results, vaccination records, viewing medications and prescriptions, referrals, and video calls with a veterinarian and more.
 
 ---
 
-### Features
+## Features
 
 - **Pet Owners:**
 
@@ -61,7 +78,7 @@ VetPet is a comprehensive application intended for veterinary institutions and p
 
 ---
 
-### Built With
+## Built With
 
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
@@ -99,72 +116,69 @@ VetPet is a comprehensive application intended for veterinary institutions and p
   </tr>
 </table>
 
-<!--
-### Installation
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/vetpet.git
-   cd vetpet
-   ```
-2. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Set Up Environment Variables:**
-   Create a `.env` file in the root directory and add the necessary environment variables as specified in the `.env.example` file.
+---
 
-4. **Run the Application:**
-   ```bash
-   npm start
-   ```
+## Installation
 
-### Usage
-1. **Starting the Application:**
-   After completing the installation steps, start the application with `npm start`.
-2. **Accessing the Application:**
-   Open your browser and navigate to `http://localhost:3000` to access the VetPet application.
-3. **Using the Features:**
-   - **Client Management:** Add, edit, and delete client and pet information.
-   - **Referrals:** Create new referrals and view existing ones.
-   - **Photographs:** Upload and manage pet photographs.
-   - **Veterinary Activities:** Track and manage all veterinary-related actions.
-   - **Appointments and Payments:** Manage appointments and payments, including viewing receipts.
-   - **Health Records:** Track vaccination records, medications, and prescriptions.
-   - **Video Consultations:** Schedule and conduct video calls with veterinarians.
+Follow these steps to set up the VetPet application:
 
-### Configuration
-To configure the application, modify the environment variables in the `.env` file according to your setup. Key configuration options include:
-- **Database Configuration:** Set up the database connection string.
-- **API Keys:** Add necessary API keys for any third-party services used in the application.
+#### 1. Clone the Repository
 
-### Contributing
-We welcome contributions from the community! To contribute to VetPet, follow these steps:
-1. **Fork the Repository:**
-   Click on the "Fork" button at the top right corner of this repository page.
-2. **Clone Your Fork:**
-   ```bash
-   git clone https://github.com/yourusername/vetpet.git
-   cd vetpet
-   ```
-3. **Create a New Branch:**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-4. **Make Your Changes:**
-   Implement your feature or bug fix.
-5. **Commit and Push:**
-   ```bash
-   git add .
-   git commit -m "Add your commit message here"
-   git push origin feature/your-feature-name
-   ```
-6. **Create a Pull Request:**
-   Go to the original repository and create a pull request from your fork.
--->
+First, clone the repository to your local machine:
+
+```bash
+git clone https://github.com/Daniel-Elgarisi/VetPet.git
+```
+
+### 2. Backend Setup
+
+Navigate to the backend folder and install the dependencies:
+
+```bash
+cd backend
+npm install
+```
+
+- Set up the environment variables:
+  - Follow the instructions in the [Set Up Environment Variables](#set-up-environment-variables) section.
+
+Start the backend server:
+
+```bash
+node src/server
+```
+
+### 3. Frontend Setup
+
+For the frontend, navigate to each folder (VetPet and VetPetVideo) and install dependencies:
+
+**Important:** Before running the commands, update the `localNetworkIP` in the `config` files located at `frontend/VetPet/config` and `frontend/VetPetVideo/config`.
+
+Replace the placeholder with your own local network IP:
+
+```javascript
+const localNetworkIP = "your_local_network_ip";
+```
+
+- VetPet:
+
+```bash
+cd frontend/VetPet
+npm install
+npx expo start
+```
+
+- VetPetVideo:
+
+```bash
+cd frontend/VetPetVideo
+npm install
+npx expo start
+```
 
 ---
 
-### Set Up Environment Variables
+## Set Up Environment Variables
 
 Create a `.env` file in the root directory of the `backend` folder and add the necessary environment variables as specified in the `.env.example` file.
 
@@ -209,7 +223,7 @@ Create a `.env` file in the root directory of the `backend` folder and add the n
 
 ---
 
-### Database Setup
+## Database Setup
 
 To set up the database for the VetPet application, follow the instructions below.
 
@@ -239,18 +253,18 @@ To create the database using this script, the user can follow these steps:
 
 ---
 
-### License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-### Contributors
+## Contributors
 
 For a full list of contributors, see the [CONTRIBUTORS.md](CONTRIBUTORS.md) file.
 
 ---
 
-### Contact
+## Contact
 
 For any questions or support, please contact us at [vetpetapplication@gmail.com].

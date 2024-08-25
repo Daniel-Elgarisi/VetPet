@@ -47,7 +47,7 @@ app.use("/vets", vetsRoutes);
 let server;
 /* istanbul ignore if */
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 5001;
   server = http.createServer(app).listen(port, () => {
     console.log(`HTTP Server running at http://localhost:${port}`);
   });
