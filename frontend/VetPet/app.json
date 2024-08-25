@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "VetPet",
+    "slug": "VetPet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.vetpet",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses your camera to make video calls.",
+        "NSMicrophoneUsageDescription": "This app uses your microphone to make video calls.",
+        "NSCalendarsUsageDescription": "This app uses your calendar to add appointments.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.yourcompany.vetpet",
+      "permissions": [
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+        "INTERNET",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR"
+      ],
+      "usesCleartextTraffic": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-calendar"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "195cbb40-9eec-4ed7-9014-271878e035ad"
+      }
+    }
+  }
+}
