@@ -11,7 +11,8 @@
 4. [Environment Variables](#set-up-environment-variables)
 5. [Database Setup](#database-setup)
 6. [License](#license)
-7. [Contact](#contact)
+7. [Contributors](#contributors)
+8. [Contact](#contact)
 
 ---
 
