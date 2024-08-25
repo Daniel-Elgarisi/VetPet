@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "VetPetVideo",
+    "slug": "VetPetVideo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.vetpet",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses your camera to make video calls.",
+        "NSMicrophoneUsageDescription": "This app uses your microphone to make video calls.",
+        "NSCalendarsUsageDescription": "This app uses your calendar to add appointments.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.yourcompany.vetpetvideo",
+      "permissions": [
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+        "INTERNET",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_PHONE_STATE"
+      ],
+      "usesCleartextTraffic": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
