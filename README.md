@@ -11,7 +11,8 @@
 4. [Environment Variables](#set-up-environment-variables)
 5. [Database Setup](#database-setup)
 6. [License](#license)
-7. [Contact](#contact)
+7. [Contributors](#contributors)
+8. [Contact](#contact)
 
 ---
 
@@ -241,6 +242,12 @@ To create the database using this script, the user can follow these steps:
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+### Contributors
+
+For a full list of contributors, see the [CONTRIBUTORS.md](CONTRIBUTORS.md) file.
 
 ---
 
